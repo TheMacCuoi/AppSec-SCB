@@ -26,3 +26,22 @@ rules:
     languages:
       - c
     severity: WARNING
+
+    
+  - id: buffer-maximum-length-miss-checked
+    patterns: 
+    - pattern: read(..., $X1, $X2);
+    - pattern-not-inside: |
+        if($X1 <= $X2 ){
+          ...
+          read(..., $X1, $X2);
+          ...
+        }
+    message: The product did not check the maximum length of the buffer, this might cause an buffer overflow
+    metadata:
+      cwe:
+        - "CWE-119:Improper restriction of operations within the bounds of a memory buffer"
+      references:
+        - https://cwe.mitre.org/data/definitions/119.html
+    languages: [c]
+    severity: WARNING
