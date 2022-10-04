@@ -1,0 +1,28 @@
+rules:
+  - id: improper-input-validation
+    pattern-either:
+      - patterns:
+          - pattern: $ERR = scanf(..., &$X);
+          - pattern-not-inside: |
+              $ERR = scanf(..., &$X);
+              ...
+              if ($X < 0) {
+                ...
+              }
+      - patterns:
+          - pattern: sscanf(..., &$X,...);
+          - pattern-not-inside: |
+              sscanf(..., &$X,...);
+              ...
+              if ($X == null){
+                ...
+              }
+    message: The product receives input or data, but it does not validate or incorrectly validates that the input has the properties that are required to process the data safely and correctly.
+    metadata:
+      cwe:
+        - "CWE-20: Improper Input Validation"
+      references:
+        - https://cwe.mitre.org/data/definitions/20.html
+    languages:
+      - c
+    severity: WARNING
