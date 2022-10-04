@@ -2,9 +2,9 @@ rules:
   - id: improper-input-validation
     pattern-either:
       - patterns:
-          - pattern: $ERR = scanf(..., &$X);
+          - pattern: scanf(..., &$X);
           - pattern-not-inside: |
-              $ERR = scanf(..., &$X);
+              scanf(..., &$X);
               ...
               if ($X < 0) {
                 ...
