@@ -1,7 +1,7 @@
 apiVersion: "execution.securecodebox.io/v1"
 kind: Scan
 metadata:
-  name: "semgrep-vulnerable-govwa"
+  name: "semgrep-vulnerable-vulnerable-flask-app"
 spec:
   volumes:
     - name: test-dir
@@ -12,16 +12,16 @@ spec:
   scanType: "semgrep"
   parameters:
     - "-c"
-    - "p/ci"
-    - "/test/govwa"
+    - "auto"
+    - "/test/vulnerable-flask-app"
   initContainers:
     - name: "provision-git"
       image: bitnami/git
       command:
         - git
         - clone
-        - "https://github.com/0c34/govwa"
-        - /test/govwa
+        - "https://github.com/we45/Vulnerable-Flask-App"
+        - /test/vulnerable-flask-app
       volumeMounts:
         - mountPath: "/test/"
           name: test-dir

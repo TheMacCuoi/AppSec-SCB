@@ -1,0 +1,28 @@
+apiVersion: "execution.securecodebox.io/v1"
+kind: Scan
+metadata:
+  name: "semgrep-vulnerable-govwa"
+spec:
+  volumes:
+    - name: test-dir
+      emptyDir: {}
+  volumeMounts:
+    - mountPath: "/test/"
+      name: test-dir
+  scanType: "semgrep"
+  parameters:
+    - "-c"
+    - "auto"
+    - "/test/govwa"
+  initContainers:
+    - name: "provision-git"
+      image: bitnami/git
+      command:
+        - git
+        - clone
+        - "https://github.com/0c34/govwa"
+        - /test/govwa
+      volumeMounts:
+        - mountPath: "/test/"
+          name: test-dir
+

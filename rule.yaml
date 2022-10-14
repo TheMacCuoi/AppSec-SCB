@@ -31,7 +31,7 @@ rules:
     patterns:
       - pattern: read(..., $X1, $X2);
       - pattern-not-inside: |
-          if($X1 <= $X2 ){
+          if($X1 <= $X2){
             ...
             read(..., $X1, $X2);
             ...

@@ -1,0 +1,28 @@
+apiVersion: "execution.securecodebox.io/v1"
+kind: Scan
+metadata:
+  name: "semgrep-vulnerable-webgoat"
+spec:
+  volumes:
+    - name: test-dir
+      emptyDir: {}
+  volumeMounts:
+    - mountPath: "/test/"
+      name: test-dir
+  scanType: "semgrep"
+  parameters:
+    - "-c"
+    - "auto"
+    - "/test/webgoat"
+  initContainers:
+    - name: "provision-git"
+      image: bitnami/git
+      command:
+        - git
+        - clone
+        - "https://github.com/WebGoat/WebGoat"
+        - /test/webgoat
+      volumeMounts:
+        - mountPath: "/test/"
+          name: test-dir
+
